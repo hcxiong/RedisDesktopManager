@@ -4,7 +4,6 @@
 #include "connections-tree/model.h"
 #include "mocks/itemoperationsmock.h"
 
-
 #include <QtCore>
 #include <QTest>
 #include <QSignalSpy>

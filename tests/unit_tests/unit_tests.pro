@@ -45,6 +45,10 @@ win32-msvc* {
     debug:   DESTDIR = $$PROJECT_ROOT/bin/windows/debug
 }
 
+HEADERS += $$PROJECT_ROOT/3rdparty/qt_modeltest/*.h
+SOURCES += $$PROJECT_ROOT/3rdparty/qt_modeltest/*.cpp
+INCLUDEPATH += $$PROJECT_ROOT/3rdparty/qt_modeltest/
+
 win32 {
     CONFIG -= debug
     CONFIG += release

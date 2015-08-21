@@ -55,6 +55,10 @@ QModelIndex ValueEditor::ViewModel::index(int row, int column, const QModelIndex
 {
     Q_UNUSED(column);
     Q_UNUSED(parent);
+
+    if (row < 0 || column < 0)
+        return QModelIndex();
+
     return createIndex(row, 0);
 }
 
@@ -104,10 +108,22 @@ QHash<int, QByteArray> ValueEditor::ViewModel::roleNames() const
 
 void ValueEditor::ViewModel::addKey(QString keyName, QString keyType, const QVariantMap &row)
 {
+    if (m_newKeyRequest.first.isNull()) {
+        qDebug() << "Invalid new key request";
+        return;
+    }
+
+    auto connection = m_newKeyRequest.first.toStrongRef();
+
+    if (!connection) {
+        qDebug() << "Invalid new key request";
+        return;
+    }
+
     try {
-        m_keyFactory->addKey(m_newKeyRequest.first,
-                             keyName, m_newKeyRequest.second,
-                             keyType, row);
+        m_keyFactory->addKey(connection, keyName,
+                             m_newKeyRequest.second, keyType, row);
+        m_newKeyRequest = NewKeyRequest();
     } catch (const Model::Exception& e) {
         emit keyError(-1, "Can't add new key: " + QString(e.what()));
     }
@@ -183,7 +199,7 @@ void ValueEditor::ViewModel::openNewKeyDialog(QSharedPointer<RedisClient::Connec
     if (connection.isNull() || dbIndex < 0)
         return;
 
-    m_newKeyRequest = qMakePair(connection, dbIndex);
+    m_newKeyRequest = qMakePair(connection.toWeakRef(), dbIndex);
 
     QString dbId= QString("%1:db%2")
             .arg(connection->getConfig().name())

@@ -23,6 +23,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "testcases/console/test_console.h"
 #include "testcases/value-editor/test_valueview.h"
 #include "testcases/value-editor/test_compression.h"
+#include "testcases/value-editor/test_viewmodel.h"
 #include "redisclient/redisclient.h"
 
 int main(int argc, char *argv[])
@@ -32,32 +33,33 @@ int main(int argc, char *argv[])
     initRedisClient();
 
     int allTestsResult = 0
-            // connections-tree module
-            + QTest::qExec(new TestServerItem, argc, argv)
-            + QTest::qExec(new TestDatabaseItem, argc, argv)
+//            // connections-tree module
+//            + QTest::qExec(new TestServerItem, argc, argv)
+//            + QTest::qExec(new TestDatabaseItem, argc, argv)
 
-            // redisclient module
-            + QTest::qExec(new TestCommand, argc, argv)
-            + QTest::qExec(new TestSsh, argc, argv)
-            + QTest::qExec(new TestResponse, argc, argv)
-            + QTest::qExec(new TestConnection, argc, argv)
-            + QTest::qExec(new TestConfig, argc, argv)
+//            // redisclient module
+//            + QTest::qExec(new TestCommand, argc, argv)
+//            + QTest::qExec(new TestSsh, argc, argv)
+//            + QTest::qExec(new TestResponse, argc, argv)
+//            + QTest::qExec(new TestConnection, argc, argv)
+//            + QTest::qExec(new TestConfig, argc, argv)
 
-            // console module
-            + QTest::qExec(new TestConsole, argc, argv)
+//            // console module
+//            + QTest::qExec(new TestConsole, argc, argv)
 
-            // app
-            + QTest::qExec(new TestConnectionsManager, argc, argv)
-            + QTest::qExec(new TestConfigManager, argc, argv)
-            + QTest::qExec(new TestConsoleOperations, argc, argv)
-            + QTest::qExec(new TestTreeOperations, argc, argv)
-            + QTest::qExec(new TestKeyModels, argc, argv)
-            + QTest::qExec(new TestAbstractKey, argc, argv)
-            + QTest::qExec(new TestDialogs, argc, argv)
+//            // app
+//            + QTest::qExec(new TestConnectionsManager, argc, argv)
+//            + QTest::qExec(new TestConfigManager, argc, argv)
+//            + QTest::qExec(new TestConsoleOperations, argc, argv)
+//            + QTest::qExec(new TestTreeOperations, argc, argv)
+//            + QTest::qExec(new TestKeyModels, argc, argv)
+//            + QTest::qExec(new TestAbstractKey, argc, argv)
+//            + QTest::qExec(new TestDialogs, argc, argv)
 
-            // value-editor module
-            + QTest::qExec(new TestCompression, argc, argv)
-            + QTest::qExec(new TestValueView, argc, argv)
+//            // value-editor module
+//            + QTest::qExec(new TestCompression, argc, argv)
+//            + QTest::qExec(new TestValueView, argc, argv)
+            + QTest::qExec(new TestViewModel, argc, argv)
             ;
 
     if (allTestsResult == 0)

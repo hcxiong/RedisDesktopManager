@@ -17,7 +17,6 @@ namespace ValueEditor {
 class ViewModel : public QAbstractListModel
 {
     Q_OBJECT
-
 public:
     enum Roles {
         keyNameRole = Qt::UserRole + 1,
@@ -38,7 +37,6 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;    
     QHash<int, QByteArray> roleNames() const override;
-
 
 public: // methods exported to QML
     Q_INVOKABLE void addKey(QString keyName, QString keyType, const QVariantMap &row);
@@ -66,13 +64,12 @@ private:
     QSharedPointer<AbstractKeyFactory> m_keyFactory;
     int m_currentTabIndex;
 
-    QPair<QSharedPointer<RedisClient::Connection>, int> m_newKeyRequest;
+    typedef QPair<QWeakPointer<RedisClient::Connection>, int> NewKeyRequest;
+    NewKeyRequest m_newKeyRequest;
 
     bool isIndexValid(const QModelIndex &index) const;
     void loadModel(QSharedPointer<Model> model, bool openNewTab = false);
     void removeModel(QSharedPointer<Model> model);
-
-
 };
 
 }
